@@ -6,9 +6,9 @@ class TfGraphParser:
         pass
 
     @staticmethod
-    def from_file(self, path: pathlib.Path):
+    def from_file(path: pathlib.Path):
         pass
 
     @staticmethod
-    def from_sess(self, sess):
+    def from_sess(sess):
         pass

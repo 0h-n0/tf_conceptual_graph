@@ -15,5 +15,5 @@ def test_from_sess():
             sess.run(tf.global_variables_initializer())
             o = sess.run(out_p, feed_dict={x_p: x})
             _ = tf.identity(o, name="output")
-            parser = tcfg.from_sess(sess.graph)
+            parser = tfcg.from_sess(sess.graph)
     print(parser)
