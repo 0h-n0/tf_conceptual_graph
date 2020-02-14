@@ -11,7 +11,7 @@ setup_requires = [
 ]
 
 install_requires = [
-    'tensorboardx'
+    'google'
 ]
 test_require = [
     'pytest-cov',
