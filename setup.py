@@ -11,6 +11,7 @@ setup_requires = [
 ]
 
 install_requires = [
+    'networkx',
     'google'
 ]
 test_require = [
