@@ -20,7 +20,6 @@ def build(x):
     x2 = tf.keras.layers.Dense(32)(x2)
     x2 = tf.keras.layers.ReLU()(x2)
     x2 = tf.keras.layers.Dense(16)(x2)
-
     return x, x2
 
 with tf.Graph().as_default() as graph:

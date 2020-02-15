@@ -37,7 +37,7 @@ with tf.Graph().as_default() as graph:
         o = sess.run(out_p, feed_dict={x_p: x})
         _ = tf.identity(o, name="output")
         tf.io.write_graph(sess.graph, './', 'train.pbtxt')
-        parser = tfcg.from_sess(sess.graph_def)
+        parser = tfcg.from_graph_def(sess.graph_def)
         parser.dump_json("conceptual_graph.json")
         parser.dump_img("output.png")
 ```
