@@ -2,6 +2,7 @@ import numpy as np
 import tensorflow as tf
 import tfcg
 
+
 def build(x):
     x = tf.keras.layers.Conv2D(16, 3, input_shape=[28, 28, 3])(x)
     x = tf.keras.layers.Conv2D(32, 1)(x)
@@ -22,9 +23,6 @@ def build(x):
 
     return x, x2
 
-
-
-
 with tf.Graph().as_default() as graph:
     x = np.random.rand(128, 28, 28, 3)
     x_p = tf.placeholder(tf.float32, [None, 28, 28, 3])
@@ -33,4 +31,6 @@ with tf.Graph().as_default() as graph:
         sess.run(tf.global_variables_initializer())
         o = sess.run((out1, out2), feed_dict={x_p: x})
         parser = tfcg.from_graph_def(sess.graph_def)
-        parser.dump_img()
+        parser.dump_img('outputs/multitask_graph.png')
+        parser.dump_yml('outputs/multitask_graph.yml')
+        parser.dump_gml('outputs/multitask_graph.gml')

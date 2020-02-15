@@ -18,6 +18,7 @@ class TfGraphParser:
         G = self._check_non_ancestor_nodes(G, tf_graph_def)
         G = self._register_edges(G, tf_graph_def)
         G = self._register_attributes(G, tf_graph_def)
+        self.G = G
         return G
 
     def dump_img(self, filename='output.png'):
@@ -32,8 +33,11 @@ class TfGraphParser:
         nx.draw_networkx_labels(self.G, pos, labels, font_size=16)
         plt.savefig(filename)
 
-    def dump_yaml(self, filename='output.yaml'):
+    def dump_yml(self, filename='output.yml'):
         nx.write_yaml(self.G, filename)
+
+    def dump_gml(self, filename='output.gml'):
+        nx.write_gml(self.G, filename)
 
     def _check_non_ancestor_nodes(self, G: nx.DiGraph, tf_graph_def: dict) -> nx.DiGraph:
         _name_to_idx = { name.split('/')[0]: idx for idx, name in G.nodes(data="name")}

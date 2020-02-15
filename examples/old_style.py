@@ -35,4 +35,6 @@ with tf.Graph().as_default() as graph:
         sess.run(tf.global_variables_initializer())
         o = sess.run(out_p, feed_dict={x_p: x})
         parser = tfcg.from_graph_def(sess.graph_def)
-        parser.dump_img()
+        parser.dump_img('outputs/old_style_graph.png')
+        parser.dump_yml('outputs/old_style_graph.yml')
+        parser.dump_gml('outputs/old_style_graph.gml')

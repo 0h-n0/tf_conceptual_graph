@@ -39,4 +39,6 @@ with tf.Graph().as_default() as graph:
         sess.run(tf.global_variables_initializer())
         o = sess.run((out1, out2), feed_dict={x1_p: x, x2_p: x})
         parser = tfcg.from_graph_def(sess.graph_def)
-        parser.dump_img()
+        parser.dump_img('outputs/multimodal_multitask_graph.png')
+        parser.dump_yml('outputs/multimodal_multitask_graph.yml')
+        parser.dump_gml('outputs/multimodal_multitask_graph.gml')

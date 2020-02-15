@@ -29,4 +29,6 @@ with tf.Graph().as_default() as graph:
         sess.run(tf.global_variables_initializer())
         o = sess.run(out_p, feed_dict={x_p: x, y_p: x})
         parser = tfcg.from_graph_def(sess.graph_def)
-        parser.dump_img()
+        parser.dump_img('outputs/multimodal_graph.png')
+        parser.dump_yml('outputs/multimodal_graph.yml')
+        parser.dump_gml('outputs/multimodal_graph.gml')
