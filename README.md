@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/0h-n0/tf_conceptual_graph.svg?token=fnVzZYoHYzREzRx4L8BP&branch=master)](https://travis-ci.com/0h-n0/tf_conceptual_graph)
 # tf_conceptual_graph
 
-Create tensorflow conceptual graph. Conceputual graph is not aimed to reconstruct a neural network. The main purpose of this conceputual graph is for treating a neural network as a heterogeneous graph. Once we can treat neural networks as heterogeneous graphs, we can apply graph neural network methods for them to predict inference results from trained neural networks. From the view point, we can optimize neural network structures.
+Create tensorflow(1.x) conceptual graph. Conceputual graph is not aimed to reconstruct a neural network. The main purpose of this conceputual graph is for treating a neural network as a heterogeneous graph. Once we can treat neural networks as heterogeneous graphs, we can apply graph neural network methods for them to predict inference results from trained neural networks. From the view point, we can optimize neural network structures.
 
 ## Installtion
 
