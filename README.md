@@ -3,7 +3,6 @@
 
 Create tensorflow conceptual graph. Conceputual graph is not aimed to reconstruct a neural network. The main purpose of this conceputual graph is for treating a neural network as a heterogeneous graph. Once we can treat neural networks as heterogeneous graphs, we can apply graph neural network methods for them to predict inference results from trained neural networks. From the view point, we can optimize neural network structures.
 
-
 ## Installtion
 
 ```shell
@@ -52,3 +51,5 @@ parser = tfcg.from_file("./train.pbtxt")
 parser.dump_json("conceptual_graph.json")
 mparser.dump_img("output.png")
 ```
+
+## [Examples](https://github.com/0h-n0/tf_conceptual_graph/tree/master/examples)

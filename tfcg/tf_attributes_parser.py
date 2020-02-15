@@ -33,7 +33,7 @@ def _register_channels(G: nx.DiGraph, info: dict) -> typing.Dict[str, int]:
         kernel = None
     input_channel = info['attr']['shape']['shape']['dim'][-2]['size']
     output_channel = info['attr']['shape']['shape']['dim'][-1]['size']
-    return {'input_channel': input_channel, 'output_channel': output_channel, 'kernel': kernel}
+    return {'input_channel': int(input_channel), 'output_channel': int(output_channel), 'kernel': kernel}
 
 def _parse_Conv2D(G: nx.DiGraph, info: dict) -> typing.Dict[str, int]:
     strides = [int(i) for i in info['attr']['strides']['list']['i']]
