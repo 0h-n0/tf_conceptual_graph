@@ -12,7 +12,7 @@ $ pip install tfcg
 
 ## Usage
 
-read a graph from object api(`sess.graph`)
+read a graph_def object from object api(`sess.graph_def`)
 
 ```python
 import numpy as np
@@ -39,9 +39,9 @@ with tf.Graph().as_default() as graph:
         o = sess.run(out_p, feed_dict={x_p: x})
         _ = tf.identity(o, name="output")
         tf.io.write_graph(sess.graph, './', 'train.pbtxt')
-        parser = tfcg.from_sess(sess.graph)
-        parser.dump("conceptual_graph.json")
-
+        parser = tfcg.from_sess(sess.graph_def)
+        parser.dump_json("conceptual_graph.json")
+        parser.dump_img("output.png")
 ```
 
 read a graph from a file, After dumpping a tensorflow graph file.
@@ -49,6 +49,7 @@ read a graph from a file, After dumpping a tensorflow graph file.
 ```python
 import tfcg
 
-parser = tfcg.from_file(sess.graph)
-parser.dump("conceptual_graph.json")
+parser = tfcg.from_file("./train.pbtxt")
+parser.dump_json("conceptual_graph.json")
+mparser.dump_img("output.png")
 ```

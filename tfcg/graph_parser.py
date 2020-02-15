@@ -32,6 +32,9 @@ class TfGraphParser:
         nx.draw_networkx_labels(self.G, pos, labels, font_size=16)
         plt.savefig(filename)
 
+    def dump_yaml(self, filename='output.yaml'):
+        nx.write_yaml(self.G, filename)
+
     def _check_non_ancestor_nodes(self, G: nx.DiGraph, tf_graph_def: dict) -> nx.DiGraph:
         _name_to_idx = { name.split('/')[0]: idx for idx, name in G.nodes(data="name")}
         new_node_names: typing.List[str] = []
