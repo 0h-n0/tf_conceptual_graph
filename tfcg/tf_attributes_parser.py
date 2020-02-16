@@ -8,20 +8,21 @@ def parse_attributes(G: nx.DiGraph, tf_graph_def: dict) -> nx.DiGraph:
     name_to_idx = {name: idx for idx, name in G.nodes(data="name")}
     attrs = {idx: {} for idx in name_to_idx.values()}
     for ele in nodes:
-        names = ele['name'].split('/')
-        name = ele['name'].split('/')[0]
-        if name == 'sequential':
-            continue
-        if names[-1] in ['kernel', 'Variable']:
+        try:
+            names = ele['name'].split('/')
             name = ele['name'].split('/')[0]
-            idx = name_to_idx[name]
-            attr = _register_channels(G, ele)
-            attrs[idx] = {**attrs[idx], **attr}
-        if names[-1] == 'Conv2D':
-            name = ele['name'].split('/')[0]
-            idx = name_to_idx[name]
-            attr = _parse_Conv2D(G, ele)
-            attrs[idx] = {**attrs[idx], **attr}
+            if name == 'sequential':
+                continue
+            if names[-1] in ['kernel', 'Variable']:
+                idx = name_to_idx[name]
+                attr = _register_channels(G, ele)
+                attrs[idx] = {**attrs[idx], **attr}
+            if names[-1] == 'Conv2D':
+                idx = name_to_idx[name]
+                attr = _parse_Conv2D(G, ele)
+                attrs[idx] = {**attrs[idx], **attr}
+        except KeyError as e:
+            print(e)
 
     nx.set_node_attributes(G, attrs)
     return G

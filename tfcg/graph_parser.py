@@ -8,7 +8,10 @@ from .tf_attributes_parser import parse_attributes
 
 
 class TfGraphParser:
-    SKIPED_NAME_LIST_IN_GRAPH = ['sequential', 'init']
+    SKIPED_NAME_LIST_IN_GRAPH = ['sequential', 'init', 'metrics', 'loss',
+                                 'VarIsInitializedOp', 'Variable', 'gradients',
+                                 'save', 'cross_entropy', 'Adam']
+    SKIPED_OP_LIST_IN_GRAPH = ['Sum', 'Mul', 'Cast', 'Equal', 'StridedSlice', 'Mean']
     def __init__(self):
         self.G = nx.DiGraph()
 
@@ -18,6 +21,7 @@ class TfGraphParser:
         G = self._check_non_ancestor_nodes(G, tf_graph_def)
         G = self._register_edges(G, tf_graph_def)
         G = self._register_attributes(G, tf_graph_def)
+        G = self._remove_isolated_nodes(G)
         self.G = G
         return G
 
@@ -38,6 +42,10 @@ class TfGraphParser:
 
     def dump_gml(self, filename='output.gml'):
         nx.write_gml(self.G, filename)
+
+    def _remove_isolated_nodes(self, G):
+        G.remove_nodes_from(list(nx.isolates(G)))
+        return G
 
     def _check_non_ancestor_nodes(self, G: nx.DiGraph, tf_graph_def: dict) -> nx.DiGraph:
         _name_to_idx = { name.split('/')[0]: idx for idx, name in G.nodes(data="name")}
@@ -79,16 +87,47 @@ class TfGraphParser:
                 if s in ele['name']:
                     break
             else:
+                if ele['op'] in self.SKIPED_OP_LIST_IN_GRAPH:
+                    continue
                 if 'input' in ele.keys():
-                    root_name = ele['name'].split('/')[0]
+                    names = ele['name'].split('/')
+                    root_name = names[0]
+                    # to avoid self ancestor
+                    inputs = []
+                    if len(names) > 4:
+                        continue
+                    for input in ele['input']:
+                        inputs.append(input.split('/')[0])
+                    continued = True
+                    for i in inputs:
+                        if i[0] == '^':
+                            break
+                        elif i == 'keras_learning_phase':
+                            break
+                        if i != root_name:
+                            continued = False
+                            break
+                    if continued:
+                        continue
                     if 'flatten' in root_name:
                         if len(ele['input']) == 1:
                             continue
                     if not root_name in ele['input'][0].split('/'):
                         if len(ele['input']) == 1:
-                            ancestor = ele['input']
+                            for s in self.SKIPED_NAME_LIST_IN_GRAPH:
+                                if ancestor in ele['input']:
+                                    break
+                            else:
+                                ancestor = ele['input']
                         else:
-                            ancestor = ele['input'][:-1]
+                            ancestor = []
+                            for a in ele['input'][:-1]:
+                                for s in self.SKIPED_NAME_LIST_IN_GRAPH:
+                                    if a in s:
+                                        break
+                                else:
+                                    ancestor.append(a)
+                        print(ele)
                         G.add_node(self.node_idx,
                                    name=root_name,
                                    ancestor=ancestor)
