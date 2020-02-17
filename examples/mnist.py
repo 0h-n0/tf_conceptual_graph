@@ -33,7 +33,7 @@ def main():
     val_loss, val_acc = model.evaluate(X_test, y_test, batch_size=2048)
     parser = tfcg.from_graph_def(tf.get_default_graph().as_graph_def())
     parser.dump_img("outputs/mnist_graph.png")
-    parser.dump_yml("outputs/mnist_graph.png")
+    parser.dump_yml("outputs/mnist_graph.yml")
 
     print(val_loss, val_acc)
 
