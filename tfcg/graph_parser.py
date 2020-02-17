@@ -133,7 +133,6 @@ class TfGraphParser:
                            name=name,
                            ancestor=graph_nodes[name]['ancestor'])
                 self.node_idx += 1
-        print(len(G.nodes()))
         return G
 
     @staticmethod
