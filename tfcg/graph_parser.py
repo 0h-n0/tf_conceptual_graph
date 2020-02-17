@@ -15,7 +15,7 @@ class TfGraphParser:
                                       'VarIsInitializedOp', 'gradients', 'AssignVariableOp',
                                       'save', 'cross_entropy', 'Adam', 'ArgMax' ,
                                       'init', 'Sum', 'Mul', 'Cast', 'Equal', 'Mean', 'Adam',
-                                      'save', 'cross_entropy', 'Adam', 'mul']
+                                      'save', 'cross_entropy', 'Adam', 'mul', 'Variable']
     def __init__(self):
         self.G = nx.DiGraph()
 
