@@ -22,7 +22,7 @@ test_require = [
 
 setuptools.setup(
     name="tfcg",
-    version='0.1.2',
+    version='0.1.3',
     python_requires='>3.5',
     author="Koji Ono",
     author_email="kbu94982@gmail.com",
